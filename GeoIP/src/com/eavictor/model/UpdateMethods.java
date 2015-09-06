@@ -105,7 +105,7 @@ public class UpdateMethods {
 		}
 	}
 
-	protected boolean doUpdate() {
+	public boolean doUpdate() {
 		BufferedReader br = null;
 		String line = null;
 		Connection connection = null;

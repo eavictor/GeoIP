@@ -81,6 +81,7 @@ public class UpdateHandler {
 				if (updateMethods.downloadZip()) {
 					if (updateMethods.unZip()) {
 						if (updateMethods.doUpdate()) {
+							System.out.println("Database update complete !!");
 							try {
 								Thread.sleep(86400000);
 							} catch (InterruptedException e) {

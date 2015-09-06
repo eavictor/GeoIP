@@ -1,6 +1,7 @@
 package com.eavictor.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -17,6 +18,7 @@ public class MikroTik extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public void init() {
+		//要搬到另一個Servlet內，否則此servlet會因為processUpdate是無窮迴圈導致無法完成init()
 		String realPath = this.getServletContext().getRealPath("/");
 		System.out.println(realPath);
 		UpdateHandler uh = new UpdateHandler();
@@ -37,9 +39,11 @@ public class MikroTik extends HttpServlet {
 		//將從資料庫拿回的檔案(已經處理成字串陣列)
 		//丟到前端jsp，顯示在<div id="show"></div>內。
 		
-//		for (int i = 0; i < result.length; i++) {
-//			response.getWriter().println(result[i]);
-//		}
+		//測試用code
+		PrintWriter out = response.getWriter();
+		for (int i = 0; i < result.length; i++) {
+			out.print(result[i]+"<br>");
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

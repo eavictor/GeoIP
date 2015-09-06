@@ -28,7 +28,7 @@ public class GetIPList {
 			"TK", "TL", "TM", "TN", "TO", "TR", "TT", "TV", "TW", "TZ", "UA", "UG", "US", "UY", "UZ", "VA", "VC", "VE",
 			"VG", "VI", "VN", "VU", "WF", "WS", "XK", "YE", "YT", "ZA", "ZM", "ZW" };
 	private static final String COUNTRY = "SELECT ip_start,ip_end FROM GEOIP WHERE country = ?";
-	DataSource ds = null;
+	private DataSource ds = null;
 
 	public GetIPList() {
 		Context context = null;
@@ -65,10 +65,19 @@ public class GetIPList {
 					} else {
 						result.add("/ip firewall add address=" + IPStart + "-" + IPEnd + " list=" + countries[i]);
 					}
+					System.out.println("country: "+countries[i]);
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return result;
 	}
