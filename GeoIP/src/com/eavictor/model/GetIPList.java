@@ -52,22 +52,25 @@ public class GetIPList {
 				countries = GLOBAL_COUNTRIES;
 			}
 			for (int i = 0; i < countries.length; i++) {
-				result.add("/ip firewall address-list remove [/ip firewall address-list find list=" + countries[i] + "]"
-						+ "/ipv6 firewall address-list remove [/ipv6 firewall address-list find list=" + countries[i]
-						+ "]");
 				pstmt.setString(1, countries[i]);
 				rs = pstmt.executeQuery();
+				result.add("/ip firewall address-list remove [/ip firewall address-list find list=" + countries[i]
+						+ "]\r\n" + "/ipv6 firewall address-list remove [/ipv6 firewall address-list find list="
+						+ countries[i] + "]\r\n");
 				while (rs.next()) {
 					String IPStart = rs.getString(1);
 					String IPEnd = rs.getString(2);
 					if (IPStart.contains("::")) {
-						result.add("/ipv6 firewall add address=" + IPStart + "-" + IPEnd + " list=" + countries[i]);
+						result.add("/ipv6 firewall add address=" + IPStart + "-" + IPEnd + " list=" + countries[i]
+								+ "\r\n");
 					} else {
-						result.add("/ip firewall add address=" + IPStart + "-" + IPEnd + " list=" + countries[i]);
+						result.add(
+								"/ip firewall add address=" + IPStart + "-" + IPEnd + " list=" + countries[i] + "\r\n");
 					}
-					System.out.println("country: "+countries[i]);
 				}
+				System.out.println(countries[i] + " List generate complete");
 			}
+			return result;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -79,6 +82,6 @@ public class GetIPList {
 				e.printStackTrace();
 			}
 		}
-		return result;
+		return null;
 	}
 }

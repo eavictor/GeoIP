@@ -45,6 +45,7 @@ public class UpdateMethods {
 
 	public boolean setRealPath(String path) {
 		this.path = path;
+		System.out.println("File location : "+path);
 		if (this.path != null) {
 			return true;
 		} else {
@@ -55,10 +56,12 @@ public class UpdateMethods {
 	public boolean downloadZip() {
 		if (path != null) {
 			try {
+				System.out.println("start downloading zip file");
 				String dateString = new SimpleDateFormat("yyyy-MM").format(new Date());
 				URL url = new URL("http://download.db-ip.com/free/dbip-country-" + dateString + ".csv.gz");
 				File file = new File(path + gzipFile);
 				FileUtils.copyURLToFile(url, file, 5000, 5000);
+				System.out.println("zip file download complete");
 				return true;
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
@@ -73,6 +76,7 @@ public class UpdateMethods {
 	}
 
 	public boolean unZip() {
+		System.out.println("start unzip");
 		byte[] buffer = new byte[8192];
 		GZIPInputStream inputStream = null;
 		FileOutputStream outputStream = null;
@@ -83,6 +87,7 @@ public class UpdateMethods {
 			while ((length = inputStream.read(buffer)) > 0) {
 				outputStream.write(buffer, 0, length);
 			}
+			System.out.println("unzip complete");
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -111,6 +116,7 @@ public class UpdateMethods {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		try {
+			System.out.println("start update");
 			br = new BufferedReader(new FileReader(path + csvFile));
 			connection = ds.getConnection();
 			List<IPBlockBean> ipBlock = new ArrayList<>();
@@ -129,15 +135,20 @@ public class UpdateMethods {
 				ipBlockBean.setCountry(stringArray[2].replace("\"", ""));
 				ipBlock.add(ipBlockBean);
 			}
+			System.out.println("read from csv file complete");
+			System.out.println("insert new data into database");
 			for (IPBlockBean ipBlockBean : ipBlock) {
 				pstmt.setString(1, ipBlockBean.getIPStart());
 				pstmt.setString(2, ipBlockBean.getIPEnd());
 				pstmt.setString(3, ipBlockBean.getCountry());
 				pstmt.addBatch();
 			}
+			System.out.println("ready to execute batch update");
 			pstmt.executeBatch();
 			connection.commit();
+			System.out.println("commit OK");
 			connection.setAutoCommit(true);
+			System.out.println("set auto commit true");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			if (connection != null) {

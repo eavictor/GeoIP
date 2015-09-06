@@ -13,7 +13,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class UpdateHandler {
-	private static final String CHECK_DATABASE_EMPTY = "SELECT ip_start FROM GEOIP WHERE country = NULL";
+	private static final String CHECK_DATABASE_EMPTY = "SELECT ip_start FROM GEOIP WHERE country = 'CC'";
 	private int day;
 	UpdateMethods updateMethods = new UpdateMethods();
 	DataSource ds = null;
@@ -76,28 +76,16 @@ public class UpdateHandler {
 	}
 
 	public void processUpdate() {
-		while (true) {
-			if (dayCount()) {
-				if (updateMethods.downloadZip()) {
-					if (updateMethods.unZip()) {
-						if (updateMethods.doUpdate()) {
-							System.out.println("Database update complete !!");
-							try {
-								Thread.sleep(86400000);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-								break;
-							}
-						}
+		if (dayCount()) {
+			if (updateMethods.downloadZip()) {
+				if (updateMethods.unZip()) {
+					if (updateMethods.doUpdate()) {
+						System.out.println("Database update complete !!");
 					}
 				}
-			} else {
-				try {
-					Thread.sleep(86400000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 			}
+		} else {
+			System.out.println("No update needed");
 		}
 	}
 }
