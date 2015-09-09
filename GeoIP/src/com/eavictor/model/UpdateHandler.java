@@ -76,16 +76,28 @@ public class UpdateHandler {
 	}
 
 	public void processUpdate() {
-		if (dayCount()) {
-			if (updateMethods.downloadZip()) {
-				if (updateMethods.unZip()) {
-					if (updateMethods.doUpdate()) {
-						System.out.println("Database update complete !!");
+		while (true) {
+			if (dayCount()) {
+				if (updateMethods.downloadZip()) {
+					if (updateMethods.unZip()) {
+						if (updateMethods.doUpdate()) {
+							System.out.println("Database update complete !!");
+							try {
+								Thread.sleep(86400000);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
 					}
 				}
+			} else {
+				System.out.println("No update needed");
+				try {
+					Thread.sleep(86400000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
-		} else {
-			System.out.println("No update needed");
 		}
 	}
 }
