@@ -12,9 +12,10 @@
 		TW,JP,US,GB<br> This Web will automatically generate MikroTik
 		readable list.
 	</p>
-	<input type="text" id="countries">
-	<input type="button" id="nuke" value="Generate List">
-	
+	<form method="get" action="MikroTik.do">
+	<input type="text" id="countries" name="countries" title="">
+	<input type="submit" id="nuke" value="Generate List">
+	</form>
 	<div id="show"></div>
 	
 	<script

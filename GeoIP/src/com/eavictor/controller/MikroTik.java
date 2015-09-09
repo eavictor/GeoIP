@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.eavictor.model.GetIPList;
 import com.eavictor.model.UpdateHandler;
 
-@WebServlet("/MikroTik")
+@WebServlet("/MikroTik.do")
 public class MikroTik extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -27,21 +27,15 @@ public class MikroTik extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		/*
-		 * If the day matches 2, every request will trigger database update !!
-		 * But if I put this 4 line code into init() then this system won't have
-		 * auto update function.
-		 */
 		String realPath = this.getServletContext().getRealPath("/");
 		UpdateHandler uh = new UpdateHandler();
 		uh.setPath(realPath);
 		uh.processUpdate();
 
 		// input null = fail
-		String[] countries = request.getParameter("country").split(",");
-		
-		if (countries == null) {
-			countries[0] = "CC";
+		String[] countries = request.getParameter("countries").split(",");
+		if (countries[0] == null || countries[0].length()==0) {
+			
 		}
 		GetIPList getIPList = new GetIPList();
 		List<String> IPList = new ArrayList<>();
