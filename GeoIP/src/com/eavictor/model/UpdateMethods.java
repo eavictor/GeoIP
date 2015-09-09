@@ -45,7 +45,7 @@ public class UpdateMethods {
 
 	public boolean setRealPath(String path) {
 		this.path = path;
-		System.out.println("File location : "+path);
+		System.out.println("File location : " + path);
 		if (this.path != null) {
 			return true;
 		} else {
@@ -137,13 +137,20 @@ public class UpdateMethods {
 			}
 			System.out.println("read from csv file complete");
 			System.out.println("insert new data into database");
+			int count = 0;
 			for (IPBlockBean ipBlockBean : ipBlock) {
 				pstmt.setString(1, ipBlockBean.getIPStart());
 				pstmt.setString(2, ipBlockBean.getIPEnd());
 				pstmt.setString(3, ipBlockBean.getCountry());
 				pstmt.addBatch();
+				count++;
+				if (count % 1000 == 0) {
+					System.out.println("execute batch update "+Math.floor(count/1000));
+					pstmt.executeBatch();
+					connection.commit();
+				}
 			}
-			System.out.println("ready to execute batch update");
+			System.out.println("execute batch update (final)");
 			pstmt.executeBatch();
 			connection.commit();
 			System.out.println("commit OK");
