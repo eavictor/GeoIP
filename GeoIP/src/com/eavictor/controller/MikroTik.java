@@ -2,9 +2,6 @@ package com.eavictor.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.eavictor.model.IPListDAO;
 import com.eavictor.model.UpdateHandler;
 
-@WebServlet("/MikroTik.do")
+@WebServlet(value="/MikroTik.do", loadOnStartup=1)
 public class MikroTik extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	String realPath = null;

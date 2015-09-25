@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.eavictor.model.IPBean" table="GEOIP">
+		<id name="IPStart" column="ip_start">
+			<generator class="assigned" />
+		</id>
+		<property name="IPEnd" column="ip_end" />
+		<property name="country" column="country" />
+	</class>
+</hibernate-mapping>

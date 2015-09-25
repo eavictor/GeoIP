@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<!-- Database Setting -->
+		<property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+		<property name="hibernate.connection.url">jdbc:sqlserver://sql.eavictor.com:1433;databaseName=GeoIP</property>		
+		<property name="hibernate.connection.username">sa</property>
+		<property name="hibernate.connection.password">eeit80123456</property>
+		
+		<!-- C3P0 Setting -->
+		<property name="hibernate.connection.provider_class">org.hivernate.connection.C3P0ConnectionProvider</property>
+		<property name="hibernate.c3p0.min_size">5</property>
+		<property name="hibernate.c3p0.max_size">20</property>
+		<property name="hibernate.c3p0.timeout">60</property>
+		<property name="hibernate.c3p0.max_statements">50</property>
+		
+		<!-- SQL Dialect -->
+		<property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+		
+		<!-- 顯示SQL指令 -->
+		<property name="hibernate.show_sql">true</property>
+		
+		<!-- Disable second-level cache -->
+		<property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+		
+		<!-- 交易管理類型，使用JDBC。 Tomcat不支援JTA -->
+		<property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+		
+		<!-- Enable Hibernate's automatic session context management -->
+		<property name="hibernate.current_session_context_class">thread</property>
+		
+		<!-- Java物件與資料庫表格的映射檔案 -->
+		<mapping resource="com/eavictor/model/IPBean.hbm.xml"/>
+	</session-factory>
+
+</hibernate-configuration>

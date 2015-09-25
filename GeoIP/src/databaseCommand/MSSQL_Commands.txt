@@ -1,0 +1,13 @@
+DROP TABLE GEOIP
+GO
+DROP DATABASE GEOIP
+GO
+CREATE DATABASE GEOIP
+GO
+USE GEOIP
+GO
+CREATE TABLE GEOIP(
+	ip_start nvarchar(100) primary key,
+	ip_end nvarchar(100) not null,
+	country nvarchar(2)
+)
