@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.eavictor.model.GetIPList;
+import com.eavictor.model.IPListDAO;
 import com.eavictor.model.UpdateHandler;
 
 @WebServlet("/MikroTik.do")
@@ -41,18 +41,11 @@ public class MikroTik extends HttpServlet {
 			throws ServletException, IOException {
 
 		// input null = fail
-		String[] countries = request.getParameter("countries").split(",");
-		for (int i = 0; i < countries.length; i++) {
-			countries[i] = countries[i].toUpperCase();
-		}
-		GetIPList getIPList = new GetIPList();
-		List<String> IPList = new ArrayList<>();
-		IPList = getIPList.generateList(countries);
-		Iterator<String> iterator = IPList.iterator();
+		String country = request.getParameter("countries");
+		IPListDAO ip = new IPListDAO();
 		PrintWriter out = response.getWriter();
-		while (iterator.hasNext()) {
-			out.print(iterator.next());
-		}
+		out.print(ip.IPList(country));
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -119,7 +119,7 @@ public class UpdateMethods {
 			System.out.println("start update");
 			br = new BufferedReader(new FileReader(path + csvFile));
 			connection = ds.getConnection();
-			List<IPBlockBean> ipBlock = new ArrayList<>();
+			List<IPBean> ipBlock = new ArrayList<>();
 			connection.setAutoCommit(false);
 			pstmt = connection.prepareStatement(TRUNCATE);
 			pstmt.executeUpdate();
@@ -129,7 +129,7 @@ public class UpdateMethods {
 			while (line != null) {
 				String[] stringArray = line.split(",");
 				line = br.readLine();
-				IPBlockBean ipBlockBean = new IPBlockBean();
+				IPBean ipBlockBean = new IPBean();
 				ipBlockBean.setIPStart(stringArray[0].replace("\"", ""));
 				ipBlockBean.setIPEnd(stringArray[1].replace("\"", ""));
 				ipBlockBean.setCountry(stringArray[2].replace("\"", ""));
@@ -138,7 +138,7 @@ public class UpdateMethods {
 			System.out.println("read from csv file complete");
 			System.out.println("insert new data into database");
 			int count = 0;
-			for (IPBlockBean ipBlockBean : ipBlock) {
+			for (IPBean ipBlockBean : ipBlock) {
 				pstmt.setString(1, ipBlockBean.getIPStart());
 				pstmt.setString(2, ipBlockBean.getIPEnd());
 				pstmt.setString(3, ipBlockBean.getCountry());

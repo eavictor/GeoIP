@@ -1,6 +1,6 @@
 package com.eavictor.model;
 
-public class IPBlockBean {
+public class IPBean {
 	private String IPStart;
 	private String IPEnd;
 	private String Country;
