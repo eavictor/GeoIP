@@ -127,12 +127,12 @@ public class UpdateMethods {
 			pstmt = connection.prepareStatement(INSERT);
 			line = br.readLine();
 			while (line != null) {
-				String[] stringArray = line.split(",");
+				String[] stringArray = line.replace("\"", "").split(",");
 				line = br.readLine();
 				IPBean ipBlockBean = new IPBean();
-				ipBlockBean.setIPStart(stringArray[0].replace("\"", ""));
-				ipBlockBean.setIPEnd(stringArray[1].replace("\"", ""));
-				ipBlockBean.setCountry(stringArray[2].replace("\"", ""));
+				ipBlockBean.setIPStart(stringArray[0]);
+				ipBlockBean.setIPEnd(stringArray[1]);
+				ipBlockBean.setCountry(stringArray[2]);
 				ipBlock.add(ipBlockBean);
 			}
 			System.out.println("read from csv file complete");

@@ -11,9 +11,22 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class IPListDAO {
-	private static final String COUNTRY = "SELECT ip_start,ip_end FROM GEOIP WHERE country=? ORDER BY ip_start";
+	private static final String COUNTRY = "SELECT ip_start,ip_end FROM GEOIP WHERE country=?";
 	private static final String COUNTRY_IPv6 = "SELECT ip_start,ip_end FROM GEOIP WHERE country=? AND ip_start LIKE '%::'";
 	private static final String COUNTRY_IPv4 = "SELECT ip_start,ip_end FROM GEOIP WHERE country=? AND ip_start LIKE '%.%.%.%'";
+
+	private static final String hibernate_COUNTRY = "from IPBean where upper(country)=?";
+	private static final String hibernate_COUNTRY_IPv6 = "from IPBean where upper(country)=? and IPStart like '%::'";
+	private static final String hibernate_COUNTRY_IPv4 = "from IPBean where upper(country)=? and IPStart like '%.%.%.%'";
+	/*
+	 * https://docs.jboss.org/hibernate/orm/3.6/reference/en-US/html/queryhql.html
+	 * 
+	 * search keyword :
+	 * 16.10. Expressions
+	 * from DomesticCat cat where upper(cat.name) like 'FRI%'
+	 * 
+	 */
+
 	private DataSource ds = null;
 
 	public IPListDAO() {
