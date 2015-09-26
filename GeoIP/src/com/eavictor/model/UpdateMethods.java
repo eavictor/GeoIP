@@ -130,8 +130,8 @@ public class UpdateMethods {
 				String[] stringArray = line.replace("\"", "").split(",");
 				line = br.readLine();
 				IPBean ipBlockBean = new IPBean();
-				ipBlockBean.setIPStart(stringArray[0]);
-				ipBlockBean.setIPEnd(stringArray[1]);
+				ipBlockBean.setIpstart(stringArray[0]);
+				ipBlockBean.setIpend(stringArray[1]);
 				ipBlockBean.setCountry(stringArray[2]);
 				ipBlock.add(ipBlockBean);
 			}
@@ -139,8 +139,8 @@ public class UpdateMethods {
 			System.out.println("insert new data into database");
 			int count = 0;
 			for (IPBean ipBlockBean : ipBlock) {
-				pstmt.setString(1, ipBlockBean.getIPStart());
-				pstmt.setString(2, ipBlockBean.getIPEnd());
+				pstmt.setString(1, ipBlockBean.getIpstart());
+				pstmt.setString(2, ipBlockBean.getIpend());
 				pstmt.setString(3, ipBlockBean.getCountry());
 				pstmt.addBatch();
 				count++;

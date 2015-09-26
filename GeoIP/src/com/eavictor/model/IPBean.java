@@ -5,31 +5,26 @@ import java.io.Serializable;
 public class IPBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private String IPStart;
-	private String IPEnd;
-	private String Country;
-
-	public String getIPStart() {
-		return IPStart;
+	private String ipstart;
+	private String ipend;
+	private String country;
+	public String getIpstart() {
+		return ipstart;
 	}
-
-	public void setIPStart(String iPStart) {
-		IPStart = iPStart;
+	public void setIpstart(String ipstart) {
+		this.ipstart = ipstart;
 	}
-
-	public String getIPEnd() {
-		return IPEnd;
+	public String getIpend() {
+		return ipend;
 	}
-
-	public void setIPEnd(String iPEnd) {
-		IPEnd = iPEnd;
+	public void setIpend(String ipend) {
+		this.ipend = ipend;
 	}
-
 	public String getCountry() {
-		return Country;
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
-	public void setCountry(String country) {
-		Country = country;
-	}
 }
