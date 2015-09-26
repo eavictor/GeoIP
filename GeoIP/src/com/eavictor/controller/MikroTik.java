@@ -41,7 +41,7 @@ public class MikroTik extends HttpServlet {
 		String country = request.getParameter("countries");
 		IPListDAO ip = new IPListDAO();
 		PrintWriter out = response.getWriter();
-		out.print(ip.IPListVer2(country));
+		out.print(ip.IPList(country));
 
 	}
 
