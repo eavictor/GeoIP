@@ -21,7 +21,7 @@
 		<property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
 		
 		<!-- 顯示SQL指令 -->
-		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.show_sql">false</property>
 		
 		<!-- Disable second-level cache -->
 		<property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
