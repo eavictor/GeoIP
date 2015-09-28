@@ -9,19 +9,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+//import java.sql.Connection;
+//import java.sql.PreparedStatement;
+//import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
+//import javax.naming.Context;
+//import javax.naming.InitialContext;
+//import javax.naming.NamingException;
+//import javax.sql.DataSource;
 
 import org.apache.commons.io.FileUtils;
 import org.hibernate.HibernateException;
@@ -33,20 +33,20 @@ public class UpdateMethods {
 	private String path;
 	private String gzipFile = "countryip.gz";
 	private String csvFile = "countryip.csv";
-	private static final String TRUNCATE = "TRUNCATE TABLE GEOIP";
-	private static final String INSERT = "INSERT INTO GEOIP (ip_start,ip_end,country) VALUES(?,?,?)";
+//	private static final String TRUNCATE = "TRUNCATE TABLE GEOIP";
+//	private static final String INSERT = "INSERT INTO GEOIP (ip_start,ip_end,country) VALUES(?,?,?)";
 	private static final String hibernate_TRUNCATE = "truncate table GEOIP";
-	private DataSource ds = null;
+//	private DataSource ds = null;
 
-	public UpdateMethods() {
-		Context context = null;
-		try {
-			context = new InitialContext();
-			ds = (DataSource) context.lookup("java:comp/env/jdbc/GEOIP");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+//	public UpdateMethods() {
+//		Context context = null;
+//		try {
+//			context = new InitialContext();
+//			ds = (DataSource) context.lookup("java:comp/env/jdbc/GEOIP");
+//		} catch (NamingException e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	public boolean setRealPath(String path) {
 		this.path = path;

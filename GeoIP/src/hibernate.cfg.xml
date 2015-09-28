@@ -24,7 +24,10 @@
 		<property name="hibernate.show_sql">false</property>
 		
 		<!-- Disable second-level cache -->
-		<property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+		<!-- <property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property> -->
+		
+		<!-- Enable second-level cache -->
+		<property name="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</property>
 		
 		<!-- 交易管理類型，使用JDBC。 Tomcat不支援JTA -->
 		<property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
