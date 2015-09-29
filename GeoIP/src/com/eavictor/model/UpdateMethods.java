@@ -127,17 +127,14 @@ public class UpdateMethods {
 				for (IPBean ipbean : ipbeans) {
 					session.saveOrUpdate(ipbean);
 					count++;
-					if (count%1000==0){
-						System.out.println(count);
-					}
 				}
-				System.out.println(count);
+				System.out.println(count+" IP blocks processed.");
+				System.out.println("Inserting new data into database...");
 				session.getTransaction().commit();
+				System.out.println("Insert complete !!");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (HibernateException e) {

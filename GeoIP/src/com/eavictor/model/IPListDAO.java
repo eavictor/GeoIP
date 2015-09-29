@@ -22,9 +22,9 @@ public class IPListDAO {
 	// private static final String COUNTRY = "SELECT ip_start,ip_end FROM GEOIP WHERE country=?";
 	// private static final String COUNTRY_IPv6 = "SELECT ip_start,ip_end FROM GEOIP WHERE country=? AND ip_start LIKE '%::'";
 	// private static final String COUNTRY_IPv4 = "SELECT ip_start,ip_end FROM GEOIP WHERE country=? AND ip_start LIKE '%.%.%.%'";
-	private static final String hibernate_COUNTRY = "from IPBean where upper(country)=?";
-	private static final String hibernate_COUNTRY_IPv6 = "from IPBean where upper(country)=? and ipstart like '%::'";
-	private static final String hibernate_COUNTRY_IPv4 = "from IPBean where upper(country)=? and ipstart like '%.%.%.%'";
+	private static final String hibernate_COUNTRY = "from IPBean where upper(country)=:country";
+	private static final String hibernate_COUNTRY_IPv6 = "from IPBean where upper(country)=:country and ipstart like '%::'";
+	private static final String hibernate_COUNTRY_IPv4 = "from IPBean where upper(country)=:country and ipstart like '%.%.%.%'";
 	/*
 	https://docs.jboss.org/hibernate/orm/3.6/reference/en-US/html/queryhql.html
 	
@@ -67,8 +67,10 @@ public class IPListDAO {
 			Query query = session.createQuery(hibernate_COUNTRY);
 
 			for (int i = 0; i < countries.length; i++) {
-
-				query.setString(0, countries[i]);
+				if (countries[i] == null || countries[i].trim().length()!=2) {
+					return "# illegal Country Code: "+countries[i];
+				}
+				query.setString("country", countries[i]);
 				list = query.list();
 				session.getTransaction().commit();
 
@@ -150,7 +152,7 @@ public class IPListDAO {
 
 			for (int i = 0; i < countries.length; i++) {
 
-				query.setString(0, countries[i]);
+				query.setString("country", countries[i]);
 				list = query.list();
 				session.getTransaction().commit();
 
@@ -218,7 +220,7 @@ public class IPListDAO {
 
 			for (int i = 0; i < countries.length; i++) {
 
-				query.setString(0, countries[i]);
+				query.setString("country", countries[i]);
 				list = query.list();
 				session.getTransaction().commit();
 
