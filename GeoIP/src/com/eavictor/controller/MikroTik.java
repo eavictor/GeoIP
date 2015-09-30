@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.eavictor.model.IPListDAO;
+import com.eavictor.model.IPListService;
 import com.eavictor.model.UpdateHandler;
 
-@WebServlet(value="/MikroTik.do", loadOnStartup=1)
+@WebServlet(value = "/MikroTik.do", loadOnStartup = 1)
 public class MikroTik extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	String realPath = null;
@@ -36,12 +36,17 @@ public class MikroTik extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		// input null = fail
 		String country = request.getParameter("countries");
-		IPListDAO ip = new IPListDAO();
+		String listType = request.getParameter("listType");
+		IPListService service = new IPListService();
 		PrintWriter out = response.getWriter();
-		out.print(ip.IPList(country));
+		if (listType.equals("v4v6")) {
+			out.print(service.IPLists(country));
+		} else if (listType.equals("v4")) {
+			out.print(service.IPv4Lists(country));
+		} else if (listType.equals("v6")) {
+			out.print(service.IPv6Lists(country));
+		}
 
 	}
 
