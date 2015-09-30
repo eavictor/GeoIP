@@ -1,17 +1,7 @@
 package com.eavictor.model;
 
-//import java.sql.Connection;
-//import java.sql.PreparedStatement;
-//import java.sql.ResultSet;
-//import java.sql.SQLException;
-//import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-//import javax.naming.Context;
-//import javax.naming.InitialContext;
-//import javax.naming.NamingException;
-//import javax.sql.DataSource;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -19,12 +9,6 @@ import org.hibernate.Session;
 import hibernate.util.HibernateUtil;
 
 public class IPListDAO {
-	// private static final String COUNTRY = "SELECT ip_start,ip_end FROM GEOIP
-	// WHERE country=?";
-	// private static final String COUNTRY_IPv6 = "SELECT ip_start,ip_end FROM
-	// GEOIP WHERE country=? AND ip_start LIKE '%::'";
-	// private static final String COUNTRY_IPv4 = "SELECT ip_start,ip_end FROM
-	// GEOIP WHERE country=? AND ip_start LIKE '%.%.%.%'";
 	private static final String hibernate_COUNTRY = "from IPBean where upper(country)=:country";
 	private static final String hibernate_COUNTRY_IPv6 = "from IPBean where upper(country)=:country and ipstart like '%::'";
 	private static final String hibernate_COUNTRY_IPv4 = "from IPBean where upper(country)=:country and ipstart like '%.%.%.%'";
@@ -35,20 +19,7 @@ public class IPListDAO {
 	 * hibernate HQL example 16.10. Expressions
 	 */
 
-	// private DataSource ds = null;
-
-	// public IPListDAO() {
-	// Context context = null;
-	// try {
-	// context = new InitialContext();
-	// ds = (DataSource) context.lookup("java:comp/env/jdbc/GEOIP");
-	// } catch (NamingException e) {
-	// e.printStackTrace();
-	// }
-	// }
-
 	// IPv6 and IPv4
-
 	// hibernate 5
 
 	@SuppressWarnings("unchecked")
@@ -77,13 +48,21 @@ public class IPListDAO {
 				while (iterator.hasNext()) {
 					IPBean ipbean = iterator.next();
 					String IPStart = ipbean.getIpstart();
-					String IPEnd = ipbean.getIpend();
 					if (IPStart.contains("::")) {
-						sb.append("/ipv6 firewall add address=" + IPStart + "-" + IPEnd + " list=" + country
+						String[] IPEnd = ipbean.getIpend().split(":");
+						int count = 0;
+						for (int i = 0; i < IPEnd.length; i++) {
+							if (IPEnd[i].equals("ffff")) {
+								count++;
+							}
+						}
+						String prefix = IPListDAO.calculatePrefix(count);
+						sb.append("/ipv6 firewall address-list add address=" + IPStart + prefix + " list=" + country
 								+ "\r\n");
 					} else if (IPStart.contains(".")) {
+						String IPEnd = ipbean.getIpend();
 						sb.append(
-								"/ip firewall add address=" + IPStart + "-" + IPEnd + " list=" + country + "\r\n");
+								"/ip firewall address-list add address=" + IPStart + "-" + IPEnd + " list=" + country + "\r\n");
 					}
 				}
 		} catch (Exception e) {
@@ -93,43 +72,7 @@ public class IPListDAO {
 		return sb;
 	}
 
-	// JDBC
-
-	// public String IPList(String country) {
-	// String[] countries = country.split(",");
-	// StringBuffer sb = new StringBuffer();
-	// ResultSet rs = null;
-	// try (Connection connection = ds.getConnection();
-	// PreparedStatement pstmt = connection.prepareStatement(COUNTRY);) {
-	// for (int i = 0; i < countries.length; i++) {
-	// pstmt.setString(1, countries[i]);
-	// rs = pstmt.executeQuery();
-	// sb.append("/ip firewall address-list remove [/ip firewall address-list
-	// find list=" + countries[i]
-	// + "]\r\n" + "/ipv6 firewall address-list remove [/ipv6 firewall
-	// address-list find list="
-	// + countries[i] + "]\r\n");
-	// while (rs.next()) {
-	// String IPStart = rs.getString(1);
-	// String IPEnd = rs.getString(2);
-	// if (IPStart.contains("::")) {
-	// sb.append("/ipv6 firewall add address=" + IPStart + "-" + IPEnd + "
-	// list=" + countries[i] + "\r\n");
-	// } else {
-	// sb.append("/ip firewall add address=" + IPStart + "-" + IPEnd + " list="
-	// + countries[i] + "\r\n");
-	// }
-	// }
-	// }
-	// return sb.toString();
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
-	// return null;
-	// }
-
 	// IPv6
-
 	// hibernate 5
 
 	@SuppressWarnings("unchecked")
@@ -156,8 +99,15 @@ public class IPListDAO {
 				while (iterator.hasNext()) {
 					IPBean ipbean = iterator.next();
 					String IPStart = ipbean.getIpstart();
-					String IPEnd = ipbean.getIpend();
-					sb.append("add address=" + IPStart + "-" + IPEnd + " list=" + country + "\r\n");
+					String[] IPEnd = ipbean.getIpend().split(":");
+					int count = 0;
+					for (int i = 0; i < IPEnd.length; i++) {
+						if (IPEnd[i].equals("ffff")) {
+							count++;
+						}
+					}
+					String prefix = IPListDAO.calculatePrefix(count);
+					sb.append("/ipv6 firewall address-list add address=" + IPStart + prefix + " list=" + country + "\r\n");
 				}
 		} catch (Exception e) {
 			session.getTransaction().rollback();
@@ -166,34 +116,7 @@ public class IPListDAO {
 		return sb;
 	}
 
-	// JDBC
-
-	// public String IPv6List(String country) {
-	// String[] countries = country.split(",");
-	// StringBuffer sb = new StringBuffer();
-	// ResultSet rs = null;
-	// try (Connection connection = ds.getConnection();
-	// PreparedStatement pstmt = connection.prepareStatement(COUNTRY_IPv6);) {
-	// for (int i = 0; i < countries.length; i++) {
-	// pstmt.setString(1, countries[i]);
-	// rs = pstmt.executeQuery();
-	// sb.append("/ipv6 firewall address-list remove [/ipv6 firewall
-	// address-list find list=" + countries[i]
-	// + "]\r\n");
-	// while (rs.next()) {
-	// sb.append("add address=" + rs.getString(1) + "-" + rs.getString(2) + "
-	// list=" + countries[i]
-	// + "\r\n");
-	// }
-	// }
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
-	// return sb.toString();
-	// }
-
 	// IPv4
-
 	// hibernate 5
 
 	@SuppressWarnings("unchecked")
@@ -218,7 +141,7 @@ public class IPListDAO {
 				IPBean ipbean = iterator.next();
 				String IPStart = ipbean.getIpstart();
 				String IPEnd = ipbean.getIpend();
-				sb.append("add address=" + IPStart + "-" + IPEnd + " list=" + country + "\r\n");
+				sb.append("/ip firewall address-list add address=" + IPStart + "-" + IPEnd + " list=" + country + "\r\n");
 			}
 		} catch (Exception e) {
 			session.getTransaction().rollback();
@@ -226,30 +149,38 @@ public class IPListDAO {
 		}
 		return sb;
 	}
-
-	// JDBC
-
-	// public String IPv4List(String country) {
-	// String[] countries = country.split(",");
-	// StringBuffer sb = new StringBuffer();
-	// ResultSet rs = null;
-	// try (Connection connection = ds.getConnection();
-	// PreparedStatement pstmt = connection.prepareStatement(COUNTRY_IPv4);) {
-	// for (int i = 0; i < countries.length; i++) {
-	// pstmt.setString(1, countries[i]);
-	// rs = pstmt.executeQuery();
-	// sb.append("/ip firewall address-list remove[/ip firewall address-list
-	// find list=" + countries[i]
-	// + "]\r\n");
-	// while (rs.next()) {
-	// sb.append("add address=" + rs.getString(1) + "-" + rs.getString(2) + "
-	// list=" + countries[i]
-	// + "\r\n");
-	// }
-	// }
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
-	// return sb.toString();
-	// }
+	
+	private static String calculatePrefix(int count) {
+		String prefix = "/128";
+		switch(count) {
+		case 0:
+			break;
+		case 1:
+			prefix = "/112";
+			break;
+		case 2:
+			prefix = "/96";
+			break;
+		case 3:
+			prefix = "/80";
+			break;
+		case 4:
+			prefix = "/64";
+			break;
+		case 5:
+			prefix = "/48";
+			break;
+		case 6:
+			prefix = "/32";
+			break;
+		case 7:
+			prefix = "/16";
+			break;
+		case 8:
+			prefix = "/0";
+			break;
+		}
+		return prefix;
+	}
+	
 }

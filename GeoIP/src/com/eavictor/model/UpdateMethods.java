@@ -33,20 +33,7 @@ public class UpdateMethods {
 	private String path;
 	private String gzipFile = "countryip.gz";
 	private String csvFile = "countryip.csv";
-//	private static final String TRUNCATE = "TRUNCATE TABLE GEOIP";
-//	private static final String INSERT = "INSERT INTO GEOIP (ip_start,ip_end,country) VALUES(?,?,?)";
 	private static final String hibernate_TRUNCATE = "truncate table GEOIP";
-//	private DataSource ds = null;
-
-//	public UpdateMethods() {
-//		Context context = null;
-//		try {
-//			context = new InitialContext();
-//			ds = (DataSource) context.lookup("java:comp/env/jdbc/GEOIP");
-//		} catch (NamingException e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 	public boolean setRealPath(String path) {
 		this.path = path;
@@ -144,93 +131,4 @@ public class UpdateMethods {
 		}
 		return true;
 	}
-	
-//	public boolean doUpdate() {
-//		BufferedReader br = null;
-//		String line = null;
-//		Connection connection = null;
-//		PreparedStatement pstmt = null;
-//		try {
-//			System.out.println("start update");
-//			br = new BufferedReader(new FileReader(path + csvFile));
-//			connection = ds.getConnection();
-//			List<IPBean> ipBlock = new ArrayList<>();
-//			connection.setAutoCommit(false);
-//			pstmt = connection.prepareStatement(TRUNCATE);
-//			pstmt.executeUpdate();
-//			connection.commit();
-//			pstmt = connection.prepareStatement(INSERT);
-//			line = br.readLine();
-//			while (line != null) {
-//				String[] stringArray = line.replace("\"", "").split(",");
-//				line = br.readLine();
-//				IPBean ipBlockBean = new IPBean();
-//				ipBlockBean.setIpstart(stringArray[0]);
-//				ipBlockBean.setIpend(stringArray[1]);
-//				ipBlockBean.setCountry(stringArray[2]);
-//				ipBlock.add(ipBlockBean);
-//			}
-//			System.out.println("read from csv file complete");
-//			System.out.println("insert new data into database");
-//			int count = 0;
-//			for (IPBean ipBlockBean : ipBlock) {
-//				pstmt.setString(1, ipBlockBean.getIpstart());
-//				pstmt.setString(2, ipBlockBean.getIpend());
-//				pstmt.setString(3, ipBlockBean.getCountry());
-//				pstmt.addBatch();
-//				count++;
-//				if (count % 1000 == 0) {
-//					System.out.println("execute batch update "+Math.floor(count/1000));
-//					pstmt.executeBatch();
-//					connection.commit();
-//				}
-//			}
-//			System.out.println("execute batch update (final)");
-//			pstmt.executeBatch();
-//			connection.commit();
-//			System.out.println("commit OK");
-//			connection.setAutoCommit(true);
-//			System.out.println("set auto commit true");
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//			if (connection != null) {
-//				try {
-//					connection.rollback();
-//				} catch (SQLException e1) {
-//					e1.printStackTrace();
-//				}
-//			}
-//			return false;
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			if (connection != null) {
-//				try {
-//					connection.rollback();
-//				} catch (SQLException e1) {
-//					e1.printStackTrace();
-//				}
-//			}
-//			return false;
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			if (connection != null) {
-//				try {
-//					connection.rollback();
-//				} catch (SQLException e1) {
-//					e1.printStackTrace();
-//				}
-//			}
-//			return false;
-//		} finally {
-//			if (br != null) {
-//				try {
-//					br.close();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		return true;
-//	}
-
 }
