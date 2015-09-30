@@ -151,7 +151,9 @@ public class IPListDAO {
 			Query query = session.createQuery(hibernate_COUNTRY_IPv6);
 
 			for (int i = 0; i < countries.length; i++) {
-
+				if (countries[i] == null || countries[i].trim().length()!=2) {
+					return "# illegal Country Code: "+countries[i];
+				}
 				query.setString("country", countries[i]);
 				list = query.list();
 				session.getTransaction().commit();
@@ -219,7 +221,9 @@ public class IPListDAO {
 			Query query = session.createQuery(hibernate_COUNTRY_IPv4);
 
 			for (int i = 0; i < countries.length; i++) {
-
+				if (countries[i] == null || countries[i].trim().length()!=2) {
+					return "# illegal Country Code: "+countries[i];
+				}
 				query.setString("country", countries[i]);
 				list = query.list();
 				session.getTransaction().commit();
