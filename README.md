@@ -1,7 +1,5 @@
 # GeoIP
 Generate MikroTik readable IP List
 
-Todo list :
-
-1. add IPv4 and IPv6 only option (style : checkbox).
-2. RESTful API.
+This project uses Hibernate 5 so it's compatible with any database now.
+For using RESTful API, please see index.jsp for detailed information.
