@@ -6,6 +6,10 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import com.googlecode.ipv6.IPv6Address;
+import com.googlecode.ipv6.IPv6AddressRange;
+import com.googlecode.ipv6.IPv6Network;
+
 import hibernate.util.HibernateUtil;
 
 public class IPListDAO {
@@ -48,21 +52,15 @@ public class IPListDAO {
 				while (iterator.hasNext()) {
 					IPBean ipbean = iterator.next();
 					String IPStart = ipbean.getIpstart();
+					String IPEnd = ipbean.getIpend();
 					if (IPStart.contains("::")) {
-						String[] IPEnd = ipbean.getIpend().split(":");
-						int count = 0;
-						for (int i = 0; i < IPEnd.length; i++) {
-							if (IPEnd[i].equals("ffff")) {
-								count++;
-							}
+						IPv6AddressRange range = IPv6AddressRange.fromFirstAndLast(IPv6Address.fromString(IPStart), IPv6Address.fromString(IPEnd));
+						Iterator<IPv6Network> subnetsIterator = range.toSubnets();
+						while (subnetsIterator.hasNext()) {
+							sb.append("/ipv6 firewall address-list add address=" + subnetsIterator.next() + " list=" + country + "\r\n");
 						}
-						String prefix = IPListDAO.calculatePrefix(count);
-						sb.append("/ipv6 firewall address-list add address=" + IPStart + prefix + " list=" + country
-								+ "\r\n");
 					} else if (IPStart.contains(".")) {
-						String IPEnd = ipbean.getIpend();
-						sb.append(
-								"/ip firewall address-list add address=" + IPStart + "-" + IPEnd + " list=" + country + "\r\n");
+						sb.append("/ip firewall address-list add address=" + IPStart + "-" + IPEnd + " list=" + country + "\r\n");
 					}
 				}
 		} catch (Exception e) {
@@ -99,15 +97,12 @@ public class IPListDAO {
 				while (iterator.hasNext()) {
 					IPBean ipbean = iterator.next();
 					String IPStart = ipbean.getIpstart();
-					String[] IPEnd = ipbean.getIpend().split(":");
-					int count = 0;
-					for (int i = 0; i < IPEnd.length; i++) {
-						if (IPEnd[i].equals("ffff")) {
-							count++;
-						}
+					String IPEnd = ipbean.getIpend();
+					IPv6AddressRange range = IPv6AddressRange.fromFirstAndLast(IPv6Address.fromString(IPStart), IPv6Address.fromString(IPEnd));
+					Iterator<IPv6Network> subnetsIterator = range.toSubnets();
+					while (subnetsIterator.hasNext()) {
+						sb.append("/ipv6 firewall address-list add address=" + subnetsIterator.next() + " list=" + country + "\r\n");
 					}
-					String prefix = IPListDAO.calculatePrefix(count);
-					sb.append("/ipv6 firewall address-list add address=" + IPStart + prefix + " list=" + country + "\r\n");
 				}
 		} catch (Exception e) {
 			session.getTransaction().rollback();
@@ -149,38 +144,4 @@ public class IPListDAO {
 		}
 		return sb;
 	}
-	
-	private static String calculatePrefix(int count) {
-		String prefix = "/128";
-		switch(count) {
-		case 0:
-			break;
-		case 1:
-			prefix = "/112";
-			break;
-		case 2:
-			prefix = "/96";
-			break;
-		case 3:
-			prefix = "/80";
-			break;
-		case 4:
-			prefix = "/64";
-			break;
-		case 5:
-			prefix = "/48";
-			break;
-		case 6:
-			prefix = "/32";
-			break;
-		case 7:
-			prefix = "/16";
-			break;
-		case 8:
-			prefix = "/0";
-			break;
-		}
-		return prefix;
-	}
-	
 }
