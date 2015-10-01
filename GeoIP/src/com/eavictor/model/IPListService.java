@@ -6,7 +6,7 @@ public class IPListService {
 		StringBuffer sb = new StringBuffer();
 		String[] countries = country.split(",");
 		for (int i = 0; i < countries.length; i++) {
-			sb.append(dao.IPList(countries[i]));
+			sb.append(dao.IPv4List(countries[i])).append(dao.IPv6List(countries[i]));
 		}
 		return sb.toString();
 	}
