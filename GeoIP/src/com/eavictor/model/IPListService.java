@@ -4,7 +4,7 @@ public class IPListService {
 	public String IPLists(String country) {
 		IPListDAO dao = new IPListDAO();
 		StringBuffer sb = new StringBuffer();
-		String[] countries = country.split(",");
+		String[] countries = country.toUpperCase().split(",");
 		for (int i = 0; i < countries.length; i++) {
 			sb.append(dao.IPv4List(countries[i])).append(dao.IPv6List(countries[i]));
 		}
@@ -14,7 +14,7 @@ public class IPListService {
 	public String IPv4Lists(String country) {
 		IPListDAO dao = new IPListDAO();
 		StringBuffer sb = new StringBuffer();
-		String[] countries = country.split(",");
+		String[] countries = country.toUpperCase().split(",");
 		for (int i = 0; i < countries.length; i++) {
 			sb.append(dao.IPv4List(countries[i]));
 		}
@@ -24,7 +24,7 @@ public class IPListService {
 	public String IPv6Lists(String country) {
 		IPListDAO dao = new IPListDAO();
 		StringBuffer sb = new StringBuffer();
-		String[] countries = country.split(",");
+		String[] countries = country.toUpperCase().split(",");
 		for (int i = 0; i < countries.length; i++) {
 			sb.append(dao.IPv6List(countries[i]));
 		}

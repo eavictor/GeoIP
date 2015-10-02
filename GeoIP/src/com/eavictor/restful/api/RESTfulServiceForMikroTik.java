@@ -7,11 +7,11 @@ import javax.ws.rs.Produces;
 
 import com.eavictor.model.IPListService;
 
-@Path("/ip")
-public class RESTfulServices {
+@Path("/mikrotik")
+public class RESTfulServiceForMikroTik {
 	
 	@GET
-	@Path("/v4/{country}")
+	@Path("/ipv4/{country}")
 	@Produces("text/plain")
 	public String getIPv4List(@PathParam("country") String country) {
 		IPListService service = new IPListService();
@@ -19,7 +19,7 @@ public class RESTfulServices {
 	}
 	
 	@GET
-	@Path("/v6/{country}")
+	@Path("/ipv6/{country}")
 	@Produces("text/plain")
 	public String getIPv6List(@PathParam("country") String country) {
 		IPListService service = new IPListService();
