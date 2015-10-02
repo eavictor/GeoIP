@@ -101,7 +101,7 @@
 							curly brackets : { }
 						</p>
 						<p class="text-primary">
-							Accept :
+							Accept :<br/>
 							1. 2 digits country code based on ISO 3166-1<br/>
 							2. both upper case and lower case.<br/>
 							3. multiple countries input divide by comma<br/>
