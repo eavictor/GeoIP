@@ -27,7 +27,13 @@
 		<!-- <property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property> -->
 		
 		<!-- Enable second-level cache -->
-		<property name="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</property>
+		<!-- <property name="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</property> -->
+		<property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+		<property name="hibernate.cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</property>
+		<property name="hibernate.cache.use_query_cache">true</property>
+  		<property name="hibernate.cache.use_second_level_cache">true</property>
+    	<property name="hibernate.cache.use_structured_entries">true</property>     
+    	<property name="hibernate.cache.generate_statistics">true</property>
 		
 		<!-- 交易管理類型，使用JDBC。 Tomcat不支援JTA -->
 		<property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="true"
+	monitoring="autodetect" dynamicConfig="true">
+	<diskStore path="java.io.tmpdir" />
+	
+<!-- 	<cache name="com.eavictor.model.IPBean" -->
+<!-- 	    eternal="false" -->
+<!-- 		timeToIdleSeconds="3600" -->
+<!-- 		timeToLiveSeconds="3600" -->
+<!-- 		diskExpiryThreadIntervalSeconds="120" -->
+<!-- 		memoryStoreEvictionPolicy="LRU"/> -->
+		
+	<defaultCache
+	    eternal="false"
+		timeToIdleSeconds="3600"
+		timeToLiveSeconds="3600"
+		diskExpiryThreadIntervalSeconds="3600"
+		memoryStoreEvictionPolicy="LRU"/>
+</ehcache>

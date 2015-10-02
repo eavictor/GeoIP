@@ -87,7 +87,8 @@ public class UpdateMethods {
 	public boolean doUpdate() {
 		List<IPBean> ipbeans = new ArrayList<IPBean>();
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		int count = 0;
+		int readCount = 0;
+		int insertCount = 0;
 		try (
 				BufferedReader br = new BufferedReader(new FileReader(path + csvFile));
 				) {
@@ -106,16 +107,24 @@ public class UpdateMethods {
 				ipbean.setCountry(oneLineMatrix[2].replace("\"",""));
 				ipbeans.add(ipbean);
 				oneLine = br.readLine();
+				readCount++;
+				if (readCount%1000 == 0) {
+					System.out.println(readCount + " Line readed.");
+				}
 			}
+			System.out.println(readCount + " Line readed.");
 			
 			// insert into database
 			try {
 				session.beginTransaction();
 				for (IPBean ipbean : ipbeans) {
 					session.saveOrUpdate(ipbean);
-					count++;
+					insertCount++;
+					if (insertCount%100 == 0) {
+						System.out.println(insertCount + " IP blocks insert processed.");
+					}
 				}
-				System.out.println(count+" IP blocks processed.");
+				System.out.println(insertCount+" IP blocks insert processed.");
 				System.out.println("Inserting new data into database...");
 				session.getTransaction().commit();
 				System.out.println("Insert complete !!");
