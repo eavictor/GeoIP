@@ -32,13 +32,16 @@
 			</div>
 			<div style="margin-top:20px">
 				<ul class="nav nav-tabs nav-justified" role="tablist" id="myTabs">
-					<li role="presentation" class="active"><a href="#index" role="tab" data-toggle="tab">Index</a></li>
+					<li role="presentation" class="active"><a href="#generator" role="tab" data-toggle="tab">IP List Generator</a></li>
 					<li role="presentation"><a href="#api" role="tab" data-toggle="tab">RESTful API</a></li>
 				</ul>
 			</div>
 			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane fade in active" id="index">
+				<div role="tabpanel" class="tab-pane fade in active" id="generator">
 					<div style="margin-top: 50px">
+						<div style="margin:50px">
+							<h1 style="text-align:center">IP List Generator for MikroTik RouterOS</h1>
+						</div>
 						<form class="form-horizontal" method="get" action="MikroTik.do">
 							<div class="form-group">
 								<label for="countries" class="col-sm-2 control-label">Country
