@@ -39,6 +39,7 @@ public class IPListDAO {
 				return sb.append("# illegal Country Code: " + country + "\r\n");
 			}
 			query.setString("country", country);
+			query.setCacheable(true);
 			list = query.list();
 			session.getTransaction().commit();
 
@@ -78,6 +79,7 @@ public class IPListDAO {
 				return sb.append("# illegal Country Code: " + country + "\r\n");
 			}
 			query.setString("country", country);
+			query.setCacheable(true);
 			list = query.list();
 			session.getTransaction().commit();
 
