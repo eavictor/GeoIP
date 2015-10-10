@@ -6,9 +6,9 @@
 	<session-factory>
 		<!-- Database Setting -->
 		<property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-		<property name="hibernate.connection.url">jdbc:sqlserver://sql.eavictor.com:1433;DatabaseName=GEOIP</property>		
+		<property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;DatabaseName=GEOIP</property>		
 		<property name="hibernate.connection.username">sa</property>
-		<property name="hibernate.connection.password">eeit80123456</property>
+		<property name="hibernate.connection.password">acg23711411</property>
 		
 		<!-- C3P0 Setting -->
 		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>

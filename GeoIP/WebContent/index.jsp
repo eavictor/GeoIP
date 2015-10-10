@@ -72,7 +72,7 @@
 				<div role="tabpanel" class="tab-pane fade" id="api">
 					<div style="margin-top: 50px">
 						<h1 class="text-primary">RESTful Service</h1>
-						<h3 class="bg-primary">http://demo.eavictor.com/GeoIP/api/mikrotik/<strong>[both,ipv4,ipv6]</strong>/<strong>{countries}</strong></h3>
+						<h3 class="bg-primary">https://demo.eavictor.com/GeoIP/api/mikrotik/<strong>[both,ipv4,ipv6]</strong>/<strong>{countries}</strong></h3>
 						<h3>/api</h3>
 						<p class="text-primary">
 							This is the root path of the RESTful service on this site, all RESTful services are under this path.
@@ -113,15 +113,15 @@
 						<h1 class="text-primary">Examples</h1>
 						<h3>List Type</h3>
 						<p class="text-primary">
-							both : http://demo.eavictor.com/GeoIP/api/mikrotik/<strong>both</strong>/TW<br/>
-							IPv6 : http://demo.eavictor.com/GeoIP/api/mikrotik/<strong>ipv6</strong>/TW<br/>
-							IPv4 : http://demo.eavictor.com/GeoIP/api/mikrotik/<strong>ipv4</strong>/TW
+							both : https://demo.eavictor.com/GeoIP/api/mikrotik/<strong>both</strong>/TW<br/>
+							IPv6 : https://demo.eavictor.com/GeoIP/api/mikrotik/<strong>ipv6</strong>/TW<br/>
+							IPv4 : https://demo.eavictor.com/GeoIP/api/mikrotik/<strong>ipv4</strong>/TW
 						</p>
 						<h3>Multiple Countries</h3>
 						<p class="text-primary">
-							Upper Case : http://demo.eavictor.com/GeoIP/api/mikrotik/both/<strong>TW,JP,US,KR</strong><br/>
-							Lower Case : http://demo.eavictor.com/GeoIP/api/mikrotik/both/<strong>tw,jp,us,kr</strong><br/>
-							Mixed Case : http://demo.eavictor.com/GeoIP/api/mikrotik/both/<strong>TW,jp,US,kr</strong>
+							Upper Case : https://demo.eavictor.com/GeoIP/api/mikrotik/both/<strong>TW,JP,US,KR</strong><br/>
+							Lower Case : https://demo.eavictor.com/GeoIP/api/mikrotik/both/<strong>tw,jp,us,kr</strong><br/>
+							Mixed Case : https://demo.eavictor.com/GeoIP/api/mikrotik/both/<strong>TW,jp,US,kr</strong>
 						</p>
 					</div>
 				</div>
