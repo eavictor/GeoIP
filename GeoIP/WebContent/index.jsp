@@ -7,7 +7,7 @@
 <title>MikroTik IP List generator</title>
 
 <!-- Latest compiled and minified JavaScript -->
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
