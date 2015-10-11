@@ -1,5 +1,5 @@
-GeoIP
-=====
+Geo-IP List Geneartor for MikroTik RouterOS
+===========================================
 a Tiny project for generate MikroTik RouterOS readable IP address-list.
 
 IPv6 prefix calculation reference: https://github.com/janvanbesien/java-ipv6
