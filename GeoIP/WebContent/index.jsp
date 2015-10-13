@@ -33,7 +33,7 @@
 			<div style="margin-top:20px">
 				<ul class="nav nav-tabs nav-justified" role="tablist" id="myTabs">
 					<li role="presentation" class="active"><a href="#generator" role="tab" data-toggle="tab">IP List Generator</a></li>
-					<li role="presentation"><a href="#api" role="tab" data-toggle="tab">RESTful API</a></li>
+					<li role="presentation"><a href="#api" role="tab" data-toggle="tab">RESTful Web Service</a></li>
 				</ul>
 			</div>
 			<div class="tab-content">
@@ -73,6 +73,24 @@
 					<div style="margin-top: 50px">
 						<h1 class="text-primary">RESTful Service</h1>
 						<h3 class="bg-primary">https://demo.eavictor.com/GeoIP/api/mikrotik/<strong>[both,ipv4,ipv6]</strong>/<strong>{countries}</strong></h3>
+						<div class="jumbotron">
+						<h1 class="text-primary">How to Use ?</h1>
+						<h3>1. Create a Scheduler on MikroTik RouterOS</h3>
+						<p class="text-mute">
+							(1) open winbox.<br>
+							(2) navigate to System > Scheduler.<br>
+							(3) add new scheduler.
+						</p>
+						<h3>2. Put these commands into the window</h3>
+						<p class="text-mute">
+							/tool fetch url="https://demo.eavictor.com/api/mikrotik/both/TW"<br>
+							/import file-name=TW<br>
+							/file remove TW<br><br>
+							note:<br>
+							you can replace TW with multiple country code divide by "," like TW,JP,KR,US in a single URL<br>
+							other country code can be found at <a href="https://countrycode.org/">countrycode.org</a>
+							</p>
+						</div>
 						<h3>/api</h3>
 						<p class="text-primary">
 							This is the root path of the RESTful service on this site, all RESTful services are under this path.
@@ -81,11 +99,6 @@
 						<p class="text-primary">
 							This is the API for MikroTik RouterOS, we can get RouterOS readable IP lists by adding this into path.<br/>
 							Currently I only developed API for RouterOS, if you need other APIs, please contact me.<br/>
-						</p>
-						<p class="text-primary">
-							method : GET<br/>
-							return : 200<br/>
-							content type : text/plain
 						</p>
 						<h3>/[both,ipv4,ipv6]</h3>
 						<p class="text-danger">
@@ -110,19 +123,6 @@
 							3. multiple countries input divide by comma<br/>
 							comma : ,
 						</p><br/>
-						<h1 class="text-primary">Examples</h1>
-						<h3>List Type</h3>
-						<p class="text-primary">
-							both : https://demo.eavictor.com/GeoIP/api/mikrotik/<strong>both</strong>/TW<br/>
-							IPv6 : https://demo.eavictor.com/GeoIP/api/mikrotik/<strong>ipv6</strong>/TW<br/>
-							IPv4 : https://demo.eavictor.com/GeoIP/api/mikrotik/<strong>ipv4</strong>/TW
-						</p>
-						<h3>Multiple Countries</h3>
-						<p class="text-primary">
-							Upper Case : https://demo.eavictor.com/GeoIP/api/mikrotik/both/<strong>TW,JP,US,KR</strong><br/>
-							Lower Case : https://demo.eavictor.com/GeoIP/api/mikrotik/both/<strong>tw,jp,us,kr</strong><br/>
-							Mixed Case : https://demo.eavictor.com/GeoIP/api/mikrotik/both/<strong>TW,jp,US,kr</strong>
-						</p>
 					</div>
 				</div>
 			</div>
