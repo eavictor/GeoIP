@@ -83,7 +83,7 @@
 						</p>
 						<h3>2. Put these commands into the window</h3>
 						<p class="text-mute">
-							/tool fetch url="https://demo.eavictor.com/api/mikrotik/both/TW"<br>
+							/tool fetch url="https://demo.eavictor.com/GeoIP/api/mikrotik/both/TW"<br>
 							/import file-name=TW<br>
 							/file remove TW<br><br>
 							note:<br>
@@ -91,6 +91,10 @@
 							other country code can be found at <a href="https://countrycode.org/">countrycode.org</a>
 							</p>
 						</div>
+						<h3>/GeoIP</h3>
+						<p class="text-primary">
+							Web Application path.
+						</p>
 						<h3>/api</h3>
 						<p class="text-primary">
 							This is the root path of the RESTful service on this site, all RESTful services are under this path.
