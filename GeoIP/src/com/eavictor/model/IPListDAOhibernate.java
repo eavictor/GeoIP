@@ -1,5 +1,7 @@
 package com.eavictor.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -40,7 +42,9 @@ public class IPListDAOhibernate implements IPListDAO {
 			Query query = session.createQuery(hibernate_COUNTRY_IPv6);
 
 			if (country == null || country.trim().length() != 2) {
-				return sb.append("# illegal Country Code: " + country + "\r\n");
+				return sb.append("# illegal Country Code (IPv6): " + country + "\r\n");
+			} else if (Integer.parseInt(new SimpleDateFormat("dd").format(new Date()))==2) {
+				return sb.append("# scheduled database maintenance on every 2nd day of the month !! (IPv6)");
 			}
 			query.setString("country", country);
 			query.setCacheable(true);
@@ -84,7 +88,9 @@ public class IPListDAOhibernate implements IPListDAO {
 			session.beginTransaction();
 			Query query = session.createQuery(hibernate_COUNTRY_IPv4);
 			if (country == null || country.trim().length() != 2) {
-				return sb.append("# illegal Country Code: " + country + "\r\n");
+				return sb.append("# illegal Country Code (IPv4): " + country + "\r\n");
+			} else if (Integer.parseInt(new SimpleDateFormat("dd").format(new Date()))==2) {
+				return sb.append("# scheduled database maintenance on every 2nd day of the month !! (IPv4)");
 			}
 			query.setString("country", country);
 			query.setCacheable(true);

@@ -1,4 +1,4 @@
-package com.eavictor.model;
+package com.eavictor.model.update;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,16 +25,53 @@ import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
+
+import com.eavictor.model.IPBean;
 
 import hibernate.util.HibernateUtil;
 
-public class UpdateMethods {
+public class UpdateMethodsHibernate implements UpdateMethods {
 	private String path;
 	private String gzipFile = "countryip.gz";
 	private String csvFile = "countryip.csv";
 	private static final String hibernate_TRUNCATE = "truncate table GEOIP";
+	private static final String hibernate_CHECK_DATABASE_EMPTY = "select count(*) from IPBean";
 
+	/* (non-Javadoc)
+	 * @see com.eavictor.model.update.UpdateMethods#dayCount()
+	 */
+	@Override
+	public boolean dayCount() {
+		int day = Integer.parseInt(new SimpleDateFormat("dd").format(new Date()));
+		if (day == 2 || !this.checkDataExist()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.eavictor.model.update.UpdateMethods#checkDataExist()
+	 */
+	@Override
+	public boolean checkDataExist() {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		Query query = session.createQuery(hibernate_CHECK_DATABASE_EMPTY);
+		long total = (long) query.uniqueResult();
+		if (total != 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.eavictor.model.update.UpdateMethods#setRealPath(java.lang.String)
+	 */
+	@Override
 	public boolean setRealPath(String path) {
 		this.path = path;
 		System.out.println("File location : " + path);
@@ -45,6 +82,10 @@ public class UpdateMethods {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.eavictor.model.update.UpdateMethods#downloadZip()
+	 */
+	@Override
 	public boolean downloadZip() {
 		if (path != null) {
 			try {
@@ -67,6 +108,10 @@ public class UpdateMethods {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.eavictor.model.update.UpdateMethods#unZip()
+	 */
+	@Override
 	public boolean unZip() {
 		System.out.println("start unzip");
 		byte[] buffer = new byte[8192];
@@ -84,6 +129,10 @@ public class UpdateMethods {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.eavictor.model.update.UpdateMethods#doUpdate()
+	 */
+	@Override
 	public boolean doUpdate() {
 		List<IPBean> ipbeans = new ArrayList<IPBean>();
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();

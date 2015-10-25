@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.eavictor.model.IPListService;
-import com.eavictor.model.UpdateHandler;
+import com.eavictor.model.update.UpdateHandler;
 
 @WebServlet(value = "/MikroTik.do", loadOnStartup = 1)
 public class MikroTik extends HttpServlet {
