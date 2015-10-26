@@ -37,11 +37,23 @@ public class UpdateMethodsHibernate implements UpdateMethods {
 	private String gzipFile = "countryip.gz";
 	private String csvFile = "countryip.csv";
 	private static final String hibernate_TRUNCATE = "truncate table GEOIP";
+	private static final String hibernate_TRUNCATE_CLIENT_UPDATE_REQUEST_COUNT = "truncate table CLIENT_UPDATE_REQUEST_COUNT";
 	private static final String hibernate_CHECK_DATABASE_EMPTY = "select count(*) from IPBean";
 
-	/* (non-Javadoc)
-	 * @see com.eavictor.model.update.UpdateMethods#dayCount()
-	 */
+	@Override
+	public boolean flushClientRequestCount() {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			session.createSQLQuery(hibernate_TRUNCATE_CLIENT_UPDATE_REQUEST_COUNT).executeUpdate();
+			session.getTransaction().commit();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	@Override
 	public boolean dayCount() {
 		int day = Integer.parseInt(new SimpleDateFormat("dd").format(new Date()));
@@ -51,10 +63,7 @@ public class UpdateMethodsHibernate implements UpdateMethods {
 			return false;
 		}
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.eavictor.model.update.UpdateMethods#checkDataExist()
-	 */
+
 	@Override
 	public boolean checkDataExist() {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -67,10 +76,7 @@ public class UpdateMethodsHibernate implements UpdateMethods {
 			return false;
 		}
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.eavictor.model.update.UpdateMethods#setRealPath(java.lang.String)
-	 */
+
 	@Override
 	public boolean setRealPath(String path) {
 		this.path = path;
@@ -82,9 +88,6 @@ public class UpdateMethodsHibernate implements UpdateMethods {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.eavictor.model.update.UpdateMethods#downloadZip()
-	 */
 	@Override
 	public boolean downloadZip() {
 		if (path != null) {
@@ -108,9 +111,6 @@ public class UpdateMethodsHibernate implements UpdateMethods {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.eavictor.model.update.UpdateMethods#unZip()
-	 */
 	@Override
 	public boolean unZip() {
 		System.out.println("start unzip");
@@ -129,9 +129,6 @@ public class UpdateMethodsHibernate implements UpdateMethods {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.eavictor.model.update.UpdateMethods#doUpdate()
-	 */
 	@Override
 	public boolean doUpdate() {
 		List<IPBean> ipbeans = new ArrayList<IPBean>();

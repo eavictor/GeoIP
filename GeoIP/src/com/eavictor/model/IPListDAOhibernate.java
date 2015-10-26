@@ -15,6 +15,7 @@ import com.googlecode.ipv6.IPv6Network;
 import hibernate.util.HibernateUtil;
 
 public class IPListDAOhibernate implements IPListDAO {
+	private static final String hibernate_GET_Client_Request_Count = "from ClientIPBean where clientIP=:clientIP";
 	private static final String hibernate_COUNTRY_IPv6 = "from IPBean where upper(country)=:country and ipstart like '%::'";
 	private static final String hibernate_COUNTRY_IPv4 = "from IPBean where upper(country)=:country and ipstart like '%.%.%.%'";
 	/*
@@ -23,13 +24,47 @@ public class IPListDAOhibernate implements IPListDAO {
 	 * 
 	 * hibernate HQL example 16.10. Expressions
 	 */
-
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public int clientRequestCount(String clientIP) {
+		List<ClientIPBean> list = null;
+		ClientIPBean clientIPBean = null;
+		int requestCount = 0;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery(hibernate_GET_Client_Request_Count);
+			
+			query.setString("clientIP", clientIP);
+			query.setCacheable(false);
+			list = query.list();
+			Iterator<ClientIPBean> iterator = list.iterator();
+			if(iterator.hasNext()) {
+				clientIPBean = iterator.next();
+				requestCount = clientIPBean.getRequestCount();
+			}
+			if (clientIPBean == null || requestCount < Limits.getRequestLimit()) {
+				if(clientIPBean==null) {
+					clientIPBean = new ClientIPBean();
+				}
+				clientIPBean.setClientIP(clientIP);
+				clientIPBean.setRequestCount(++requestCount);
+				session.saveOrUpdate(clientIPBean);
+				session.getTransaction().commit();
+				System.out.println(requestCount);
+				return requestCount;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(requestCount);
+		return requestCount;
+	}
+	
 	// IPv6
 	// hibernate 5
-
-	/* (non-Javadoc)
-	 * @see com.eavictor.model.IPListDAO#IPv6List(java.lang.String)
-	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public StringBuffer IPv6List(String country) {
@@ -74,10 +109,6 @@ public class IPListDAOhibernate implements IPListDAO {
 
 	// IPv4
 	// hibernate 5
-
-	/* (non-Javadoc)
-	 * @see com.eavictor.model.IPListDAO#IPv4List(java.lang.String)
-	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public StringBuffer IPv4List(String country) {

@@ -9,6 +9,7 @@ public class UpdateHandler {
 
 	public void processUpdate() {
 		while (true) {
+			updateMethods.flushClientRequestCount();
 			if (updateMethods.dayCount()) {
 				if (updateMethods.downloadZip()) {
 					if (updateMethods.unZip()) {

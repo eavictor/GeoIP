@@ -38,14 +38,15 @@ public class MikroTik extends HttpServlet {
 			throws ServletException, IOException {
 		String country = request.getParameter("countries");
 		String listType = request.getParameter("listType");
+		String clientIP = request.getRemoteAddr();
 		IPListService service = new IPListService();
 		PrintWriter out = response.getWriter();
 		if (listType.equals("v4v6")) {
-			out.print(service.IPLists(country));
+			out.print(service.IPLists(country, clientIP));
 		} else if (listType.equals("v4")) {
-			out.print(service.IPv4Lists(country));
+			out.print(service.IPv4Lists(country, clientIP));
 		} else if (listType.equals("v6")) {
-			out.print(service.IPv6Lists(country));
+			out.print(service.IPv6Lists(country, clientIP));
 		}
 
 	}

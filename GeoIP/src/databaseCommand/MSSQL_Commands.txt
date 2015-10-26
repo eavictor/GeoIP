@@ -11,3 +11,8 @@ CREATE TABLE GEOIP(
 	ip_end nvarchar(100) not null,
 	country nvarchar(2)
 )
+CREATE TABLE CLIENT_UPDATE_REQUEST_COUNT(
+	client_ip nvarchar(100) primary key,
+	request_count int
+)
+GO
