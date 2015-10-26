@@ -9,12 +9,13 @@ public class UpdateHandler {
 
 	public void processUpdate() {
 		while (true) {
+			System.out.println("Start daily update check.");
 			updateMethods.flushClientRequestCount();
 			if (updateMethods.dayCount()) {
 				if (updateMethods.downloadZip()) {
 					if (updateMethods.unZip()) {
 						if (updateMethods.doUpdate()) {
-							System.out.println("Database update complete !!");
+							System.out.println("Database update complete.");
 							try {
 								Thread.sleep(86400000);
 							} catch (InterruptedException e) {

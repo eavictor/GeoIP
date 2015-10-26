@@ -2,7 +2,7 @@ package com.eavictor.model;
 
 public class IPListService {
 	public String IPLists(String country, String clientIP) {
-		IPListDAO dao = new IPListDAOhibernate();
+		IPListDAO dao = new IPListDAOHibernate();
 		if (dao.clientRequestCount(clientIP) < Limits.getRequestLimit()) {
 			StringBuffer sb = new StringBuffer();
 			String[] countries = country.toUpperCase().split(",");
@@ -16,7 +16,7 @@ public class IPListService {
 	}
 
 	public String IPv4Lists(String country, String clientIP) {
-		IPListDAO dao = new IPListDAOhibernate();
+		IPListDAO dao = new IPListDAOHibernate();
 		if (dao.clientRequestCount(clientIP) < Limits.getRequestLimit()) {
 			StringBuffer sb = new StringBuffer();
 			String[] countries = country.toUpperCase().split(",");
@@ -30,7 +30,7 @@ public class IPListService {
 	}
 
 	public String IPv6Lists(String country, String clientIP) {
-		IPListDAO dao = new IPListDAOhibernate();
+		IPListDAO dao = new IPListDAOHibernate();
 		if (dao.clientRequestCount(clientIP) < Limits.getRequestLimit()) {
 			StringBuffer sb = new StringBuffer();
 			String[] countries = country.toUpperCase().split(",");

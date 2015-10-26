@@ -97,7 +97,7 @@ public class UpdateMethodsHibernate implements UpdateMethods {
 				URL url = new URL("http://download.db-ip.com/free/dbip-country-" + dateString + ".csv.gz");
 				File file = new File(path + gzipFile);
 				FileUtils.copyURLToFile(url, file, 5000, 5000);
-				System.out.println("zip file download complete");
+				System.out.println("zip file download complete.");
 				return true;
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
@@ -121,7 +121,7 @@ public class UpdateMethodsHibernate implements UpdateMethods {
 			while ((length = inputStream.read(buffer)) > 0) {
 				outputStream.write(buffer, 0, length);
 			}
-			System.out.println("unzip complete");
+			System.out.println("unzip complete.");
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -154,9 +154,9 @@ public class UpdateMethodsHibernate implements UpdateMethods {
 				ipbeans.add(ipbean);
 				oneLine = br.readLine();
 				readCount++;
-				if (readCount%1000 == 0) {
-					System.out.println(readCount + " Line readed.");
-				}
+//				if (readCount%1000 == 0) {
+//					System.out.println(readCount + " Line readed.");
+//				}
 			}
 			System.out.println(readCount + " Line readed.");
 			
@@ -166,9 +166,9 @@ public class UpdateMethodsHibernate implements UpdateMethods {
 				for (IPBean ipbean : ipbeans) {
 					session.saveOrUpdate(ipbean);
 					insertCount++;
-					if (insertCount%100 == 0) {
-						System.out.println(insertCount + " IP blocks insert processed.");
-					}
+//					if (insertCount%100 == 0) {
+//						System.out.println(insertCount + " IP blocks insert processed.");
+//					}
 				}
 				System.out.println(insertCount+" IP blocks insert processed.");
 				System.out.println("Inserting new data into database...");

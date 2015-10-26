@@ -14,7 +14,7 @@ import com.googlecode.ipv6.IPv6Network;
 
 import hibernate.util.HibernateUtil;
 
-public class IPListDAOhibernate implements IPListDAO {
+public class IPListDAOHibernate implements IPListDAO {
 	private static final String hibernate_GET_Client_Request_Count = "from ClientIPBean where clientIP=:clientIP";
 	private static final String hibernate_COUNTRY_IPv6 = "from IPBean where upper(country)=:country and ipstart like '%::'";
 	private static final String hibernate_COUNTRY_IPv4 = "from IPBean where upper(country)=:country and ipstart like '%.%.%.%'";
@@ -53,7 +53,6 @@ public class IPListDAOhibernate implements IPListDAO {
 				clientIPBean.setRequestCount(++requestCount);
 				session.saveOrUpdate(clientIPBean);
 				session.getTransaction().commit();
-				System.out.println(requestCount);
 				return requestCount;
 			}
 		} catch (Exception e) {
